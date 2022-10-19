@@ -1,5 +1,12 @@
 ## Pretty Printer
 
+Now! You can print anything in Java!
+
+- [x] colorful printer
+- [x] brackets of different depths have different colors
+- [x] support any type of object
+- [ ] ...
+
 ### Sample
 
 ```java
