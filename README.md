@@ -4,7 +4,8 @@ Now! You can print anything in Java!
 
 - [x] colorful printer
 - [x] brackets of different depths have different colors
-- [x] support any type of object
+- [x] support date format
+- [x] support plain object with getter/setter
 - [ ] ...
 
 ### Sample

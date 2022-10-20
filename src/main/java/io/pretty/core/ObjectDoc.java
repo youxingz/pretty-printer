@@ -21,17 +21,6 @@ public class ObjectDoc extends Doc {
             field.setAccessible(true);
             Object val = field.get(this.value);
             lines.add(name + seg + new CommonDoc(val, flatten, depth).toText());
-//            if (val == null) {
-//                lines.add(name + seg + new NullDoc(flatten, depth + 1).toText());
-//            } else if (val instanceof String) {
-//                lines.add(name + seg + new StringDoc(val.toString(), flatten, depth + 1).toText());
-//            } else if (val instanceof Number) {
-//                lines.add(name + seg + new NumberDoc((Number) val, flatten, depth + 1).toText());
-//            } else if (val instanceof List) {
-//                lines.add(name + seg + new ListDoc((List<Object>) val, flatten, depth + 1).toText());
-//            } else {
-//                lines.add(name + seg + new ObjectDoc(val, flatten, depth + 1).toText());
-//            }
         }
         String bracketColor = Color.bracketColor(depth);
         String leftBracket = bracketColor + "{" + Color.RESET;

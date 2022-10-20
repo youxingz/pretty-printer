@@ -4,7 +4,9 @@ import io.pretty.example.Friend;
 import io.pretty.example.User;
 import org.junit.Test;
 
+import java.time.*;
 import java.util.Arrays;
+import java.util.Date;
 
 public class PrettyTest {
     @Test
@@ -27,5 +29,22 @@ public class PrettyTest {
         Pretty.print(friend);
         // list of objects:
         Pretty.print(Arrays.asList(tom, tom, tom));
+        // date:
+        Pretty.print(new Date());
+        Pretty.print(Clock.systemDefaultZone());
+        Pretty.print(Duration.ofDays(1000));
+        Pretty.print(Instant.now());
+        Pretty.print(LocalDate.now());
+        Pretty.print(LocalDateTime.now());
+        Pretty.print(LocalTime.now());
+        Pretty.print(MonthDay.now());
+        Pretty.print(OffsetDateTime.now());
+        Pretty.print(OffsetTime.now());
+        Pretty.print(Period.ofYears(2022));
+        Pretty.print(Year.now());
+        Pretty.print(YearMonth.now());
+        Pretty.print(ZonedDateTime.now());
+        Pretty.print(ZoneId.systemDefault());
+        Pretty.print(ZoneOffset.ofHours(8));
     }
 }
