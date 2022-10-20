@@ -1,11 +1,15 @@
 package io.pretty.example;
 
+import java.util.List;
+
 public class User {
     private String username;
     private String avatar;
     private int age;
     private Float height;
     private String sign;
+
+    private List<User> friends;
 
     public User(String username, String avatar, int age, Float height, String sign) {
         this.username = username;
@@ -53,5 +57,13 @@ public class User {
 
     public void setSign(String sign) {
         this.sign = sign;
+    }
+
+    public List<User> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<User> friends) {
+        this.friends = friends;
     }
 }

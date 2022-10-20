@@ -14,6 +14,11 @@ public class ObjectDoc extends Doc {
 
     @Override
     public String toText() throws IllegalAccessException {
+        String bracketColor = Color.bracketColor(depth);
+        boolean ignoreObject = Context.isDuplicated(value);
+        if (!ignoreObject) {
+            Context.cacheObject(value);
+        }
         List<String> lines = new ArrayList<>();
         Field[] fields = this.value.getClass().getDeclaredFields();
         List<Field> validFields = validFields(value);
@@ -25,9 +30,12 @@ public class ObjectDoc extends Doc {
             String name = field.getName();
             field.setAccessible(true);
             Object val = field.get(this.value);
-            lines.add(name + seg + new CommonDoc(val, flatten, depth).toText());
+            String content = new CommonDoc(val, flatten, depth, ignoreObject).toText();
+            if (content == null) {
+                content = Color.BLACK_BOLD_BRIGHT + "$ref{...}" + Color.RESET;
+            }
+            lines.add(name + seg + content);
         }
-        String bracketColor = Color.bracketColor(depth);
         if (lines.isEmpty()) {
             return bracketColor + "{" + Color.RESET
                     + ".." +

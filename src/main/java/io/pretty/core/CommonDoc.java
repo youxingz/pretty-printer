@@ -5,9 +5,15 @@ import java.util.Date;
 import java.util.List;
 
 public class CommonDoc extends Doc {
+    private boolean ignoreObject = false;
 
     public CommonDoc(Object value, boolean flatten, int depth) {
         super(value, flatten, depth);
+    }
+
+    public CommonDoc(Object value, boolean flatten, int depth, boolean ignoreObject) {
+        super(value, flatten, depth);
+        this.ignoreObject = ignoreObject;
     }
 
     @Override
@@ -20,8 +26,6 @@ public class CommonDoc extends Doc {
             return new BooleanDoc((Boolean) value, flatten, depth + 1).toText();
         } else if (value instanceof Number) {
             return new NumberDoc((Number) value, flatten, depth + 1).toText();
-        } else if (value instanceof List) {
-            return new ListDoc((List<Object>) value, flatten, depth + 1).toText();
         } else if (value instanceof Date
                 || value instanceof LocalDate
                 || value instanceof LocalDateTime
@@ -36,11 +40,14 @@ public class CommonDoc extends Doc {
                 || value instanceof Year
                 || value instanceof YearMonth
                 || value instanceof ZonedDateTime
-                || value instanceof ZoneId
-                || value instanceof ZoneOffset) {
+                || value instanceof ZoneOffset
+                || value instanceof ZoneId) {
             return new DateDoc(value, flatten, depth + 1).toText();
-        } else {
+        } else if (value instanceof List && !ignoreObject) {
+            return new ListDoc((List<Object>) value, flatten, depth + 1).toText();
+        } else if (!ignoreObject) {
             return new ObjectDoc(value, flatten, depth + 1).toText();
         }
+        return null;
     }
 }

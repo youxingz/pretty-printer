@@ -25,6 +25,8 @@ public class PrettyTest {
         // object:
         User tom = new User("Tom", "https://io.youxingz/images/avatar_a.png", 17, 1.82f, "How is it going");
         User john = new User("John", "https://io.youxingz/images/avatar_b.png", 18, 1.76f, "I am fine, thank you");
+        john.setFriends(Arrays.asList(tom));
+        tom.setFriends(Arrays.asList(john));
         Friend friend = new Friend(tom, john);
         Pretty.print(friend);
         // list of objects:

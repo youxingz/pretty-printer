@@ -18,6 +18,7 @@ public class ListDoc extends Doc {
         int maxLength = 0;
         int totalLength = 0;
         for (Object val : listValues) {
+            // list 下的每一个 object 都要渲染
             String line = new CommonDoc(val, true, depth + 1).toText();
             if (maxLength < line.length()) {
                 maxLength = line.length();
