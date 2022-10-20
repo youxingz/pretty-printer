@@ -43,6 +43,6 @@ Console output:
 <dependency>
     <groupId>io.pretty</groupId>
     <artifactId>pretty-printer</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.1</version>
 </dependency>
 ```
