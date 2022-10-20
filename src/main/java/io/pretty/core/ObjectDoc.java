@@ -1,6 +1,7 @@
 package io.pretty.core;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,11 @@ public class ObjectDoc extends Doc {
     public String toText() throws IllegalAccessException {
         List<String> lines = new ArrayList<>();
         Field[] fields = this.value.getClass().getDeclaredFields();
+        List<Field> validFields = validFields(value);
         for (Field field : fields) {
+            if (validFields.stream().noneMatch(f -> f.equals(field))) {
+                continue;
+            }
 //            String name = Color.WHITE_UNDERLINED + Color.BLUE + field.getName() + Color.RESET;
             String name = field.getName();
             field.setAccessible(true);
@@ -23,6 +28,11 @@ public class ObjectDoc extends Doc {
             lines.add(name + seg + new CommonDoc(val, flatten, depth).toText());
         }
         String bracketColor = Color.bracketColor(depth);
+        if (lines.isEmpty()) {
+            return bracketColor + "{" + Color.RESET
+                    + ".." +
+                    bracketColor + "}" + Color.RESET;
+        }
         String leftBracket = bracketColor + "{" + Color.RESET;
         String rightBracket = bracketColor + "}" + Color.RESET;
         if (flatten) {
@@ -50,5 +60,27 @@ public class ObjectDoc extends Doc {
                     alignLeft + content + lastAlignLeft +
                     rightBracket;
         }
+    }
+
+    private List<Field> validFields(Object object) {
+        Method[] methods = object.getClass().getDeclaredMethods();
+        Field[] fields = object.getClass().getDeclaredFields();
+        List<Field> validFields = new ArrayList<>();
+        for (Field field : fields) {
+            String getter = toGetterCamlCase(field.getName());
+            for (Method method : methods) {
+                if (method.getName().equals(getter) && method.getParameters().length == 0) {
+                    validFields.add(field);
+                    break;
+                }
+            }
+        }
+        return validFields;
+    }
+
+    private String toGetterCamlCase(String name) {
+        if (name.length() == 1)
+            return "get" + name.toUpperCase();
+        return "get" + name.substring(0, 1).toUpperCase() + name.substring(1);
     }
 }
