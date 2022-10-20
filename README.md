@@ -6,6 +6,7 @@ Now! You can print anything in Java!
 - [x] brackets of different depths have different colors
 - [x] support date format
 - [x] support plain object with getter/setter
+- [x] support termination of infinite nested of objects
 - [ ] ...
 
 ### Sample
